@@ -2,8 +2,10 @@ import utilities as ut
 
 path2txt = "..\output\heat-inp.txt"
 length_path = 143.65
-welding_vel = 13.33
-t0 = 0.105651 # time of single step
+welding_vel = 16.67
+elem_num = 102
+t0 = length_path/welding_vel/elem_num # time of single step
+print(f"Time per step: {t0}")
 length_single_step = t0*welding_vel
 num_steps = int(round(length_path/length_single_step))
 

@@ -75,9 +75,9 @@ class point3:
 # p3 = point2(13.8740,115.299)
 
 # a,b,r = calCirPara(p1=p1,p2=p2,p3=p3)
-p1 = point3(10,1,0)
-p2 = point3(10,0,1)
-p3 = point3(10,-1,0)
+p1 = point3(34.9148,3.21214,300.226)
+p2 = point3(34.9148,14.2698,206.491)
+p3 = point3(34.9148,13.8740,115.299)
 
 o = point3(0,0,10)
 o.calCirPara(p1,p2,p3)
