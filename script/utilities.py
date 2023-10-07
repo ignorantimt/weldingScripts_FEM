@@ -27,10 +27,10 @@ def editSolveControl(file, num_attepmts=10):# 似乎没用
     file.write(f"*Controls, parameters=time incrementation")
     file.write(f", , , , , , , {num_attepmts}, , , ")
 
-def createPredefineTempField(file, step_num):
+def createPredefineTempField(file, odb_path, step_num):
     file.write(f"**\n")
     file.write(f"** Name: Field-{step_num}   Type: Temperature\n")
-    file.write(f"*Temperature, file=X:\\ABQ_ws\\singleBlade-heat-0917.odb, bstep={step_num}, binc=1, estep={step_num+1}, einc=1, midside\n")
+    file.write(f"*Temperature, file={odb_path}, bstep={step_num}, binc=1, estep={step_num+1}, einc=1, midside\n")
     file.write(f"**\n")
 
 def addBodyDFlux(file):
@@ -40,6 +40,10 @@ def addBodyDFlux(file):
     file.write(f"** Name: Load-1   Type: Body heat flux")
     file.write(f"*Dflux")
     file.write(f"PART-1-1.HMprop_P1;TC4, BFNU, 1.")
+
+def createSurfFilm(file, surf, coeff, temp):
+    file.write(f"*Sfilm\n")
+    file.write(f"{surf}, F, {temp}, {coeff}\n")
 
 def createIntModelChange(file,set_num,flag='a'):
     file.write(f"** \n")

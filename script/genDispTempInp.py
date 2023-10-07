@@ -6,13 +6,15 @@ welding_vel = 13.33
 t0 = 0.105651
 length_single_step = t0*welding_vel
 num_steps = int(round(length_path/length_single_step))
+num_steps_end = 17
+odb_path = 'X:\\ABQ_ws\\singleBlade-heat-1007.odb'
 
 with open(path2txt, "w") as file:
     ut.createMatTC4(file)
     file.write("**\n")
     file.write(f"** PREDEFINED FIELDS\n")
     file.write(f"** Name: Predefined Field-1   Type: Temperature\n")
-    file.write(f"*Initial Conditions, type=TEMPERATURE, file=X:\\ABQ_ws\\singleBlade-heat-0917.odb, step=1, inc=1, midside\n")
+    file.write(f"*Initial Conditions, type=TEMPERATURE, file={odb_path}, step=1, inc=1, midside\n")
     ut.createStaticStep(file, 0, 0.01, 0.01, 0.01)
     ut.createIntModelChange(file, 0, 'r')
     file.write("**\n")
@@ -31,7 +33,7 @@ with open(path2txt, "w") as file:
     file.write("*Boundary\n")
     file.write("Set-fix-right, 2, 2\n")
 
-    ut.createPredefineTempField(file, step_num=0)
+    ut.createPredefineTempField(file, odb_path, step_num=0)
 
     ut.editSolveControl(file, 20)
 
@@ -53,13 +55,15 @@ with open(path2txt, "w") as file:
     for step_num in range(1, num_steps + 1):
         ut.createStaticStep(file, step_num, t0, t0, t0)
         ut.createIntModelChange(file,step_num,'a')
-        ut.createPredefineTempField(file, step_num=step_num+1)
+        ut.createPredefineTempField(file, odb_path, step_num=step_num+1)
         ut.endStep(file)
-    ut.createStaticStep(file, num_steps+1, t0, 17*t0, t0)
+    for step_num in range(num_steps + 2, num_steps + num_steps_end + 1):
+        ut.createStaticStep(file, step_num, t0, t0, t0)
+        ut.createPredefineTempField(file, odb_path, step_num=step_num+1)
+        ut.endStep(file)
+    ut.createStaticStep(file, num_steps + num_steps_end +2, 1, 2400, 120)
     ut.endStep(file)
-    ut.createStaticStep(file, num_steps+2, 1, 1800, 60)
-    ut.endStep(file)
-    ut.createStaticStep(file, num_steps+3, 1, 1, 1)
+    ut.createStaticStep(file, num_steps + num_steps_end +3, 1, 1, 1)
     ut.endStep(file)
 
-print(f"代码已写入到{path2txt}文件中，共包含{num_steps+4}个步骤。")
+print(f"代码已写入到{path2txt}文件中，共包含{num_steps + num_steps_end +4}个步骤。")
