@@ -91,24 +91,14 @@ p1 = point3(10,10,0)
 p2 = point3(10,0,10)
 p3 = point3(10,-10,0)
 
-arc = arc3(p1,p2,p3)
-arc.getCirOrig()
 
-<<<<<<< HEAD
+
 # a,b,r = calCirPara(p1=p1,p2=p2,p3=p3)
 p1 = point3(34.9148,3.21214,300.226)
 p2 = point3(34.9148,14.2698,206.491)
 p3 = point3(34.9148,13.8740,115.299)
-=======
-print(f"x={arc.ox},y={arc.oy},z={arc.oz},R={arc.getRadius()}")
-    
-line_p1_p2 = line3(p1,p2)
->>>>>>> 71498462bd09a8ba5268f9cd0c09f52c85bd16f3
 
-lp = line_p1_p2.point3vt(1,2)
+arc = arc3(p1,p2,p3)
+x,y,z = arc.getCirOrig()
 
-print(f"{lp.x},{lp.y},{lp.z}")
-
-lp = line_p1_p2.point3vt(1.5,2)
-
-print(f"{lp.x},{lp.y},{lp.z}")
+print(f"{x:.4f}, {y:.4f}, {z:.4f}")
